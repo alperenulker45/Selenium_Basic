@@ -18,5 +18,6 @@ public class Sample1Task {
 //         get title of page
 //         get URL of current page
 //         close browser
+
     }
 }
