@@ -40,5 +40,32 @@ public class Sample8Task {
 //        check the background of top 2 sections
 //        rgba(255, 221, 221, 1);
 //        check h1 element font-size 64px
+
+        WebElement h1 = driver.findElement(By.xpath("//h1"));
+        System.out.println("h1.getCssValue(\"font-size\") = " + h1.getCssValue("font-size"));
+        assertEquals("64px", h1.getCssValue("font-size"));//check h1 element font-size 64px
+
+        WebElement topSection1 = driver.findElement(By.cssSelector("h1.w3-jumbo"));
+        System.out.println(topSection1.getCssValue("background-color"));
+
+        WebElement topSection2 = driver.findElement(By.cssSelector("div.w3-pale-red"));
+        System.out.println(topSection2.getCssValue("background-color"));
+
+        try {
+            assertEquals("rgba(255, 221, 221, 1)", topSection1.getCssValue("background-color"));
+        }
+        catch (AssertionError e) {
+            System.out.println("Background color should be rgba(255, 221, 221, 1)");
+            e.printStackTrace();
+        }
+
+        try {
+            assertEquals(topSection2.getCssValue("background-color"), "rgba(255, 221, 221, 1)");
+        }
+        catch (AssertionError e) {
+            System.out.println("Background color should be rgba(255, 221, 221, 1)");
+            e.printStackTrace();
+        }
+
     }
 }
