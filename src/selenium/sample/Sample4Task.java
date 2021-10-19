@@ -1,6 +1,7 @@
 package selenium.sample;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -46,6 +47,31 @@ public class Sample4Task {
 //        check that the button "Clear Result" is clickable now
 //        click on "Clear Result"
 //        check that the text is still (""), but it is not displayed
+        WebElement inputNumber = driver.findElement(By.cssSelector("#number"));
+        WebElement clearResultBtn = driver.findElement(By.id("clear_result_button_number"));
+        WebElement resultBtn = driver.findElement(By.id("result_button_number"));
+        WebElement resultNumber = driver.findElement(By.id("result_number"));
+
+        assertFalse(clearResultBtn.isEnabled());
+
+        inputNumber.clear();
+        inputNumber.sendKeys("5");
+        Thread.sleep(3000);
+        resultBtn.click();
+        Thread.sleep(2000);
+
+        assertTrue(resultNumber.isDisplayed());
+
+        String expectedNumberText = "You entered number: \"5\"";
+        assertEquals(expectedNumberText, resultNumber.getText());
+
+
+        assertTrue(clearResultBtn.isEnabled());
+        clearResultBtn.click();
+
+        assertFalse(resultNumber.isDisplayed());
+        assertEquals("", resultNumber.getText());
+
     }
 
     @Test
@@ -55,5 +81,20 @@ public class Sample4Task {
 //        click on "This is a link to Homepage"
 //        check that current url is not base_url
 //        verify that current url is homepage
+
+        WebElement linkToHomePage = driver.findElement(By.xpath("//a[@id='homepage_link']"));
+
+        assertEquals(base_url, driver.getCurrentUrl());
+
+        linkToHomePage.click();
+
+        Thread.sleep(2000);
+
+        assertNotEquals(base_url, driver.getCurrentUrl());
+
+        String expectedHomePageUrl = "https://kristinek.github.io/site/";
+        assertEquals(expectedHomePageUrl, driver.getCurrentUrl());
+
+
     }
 }

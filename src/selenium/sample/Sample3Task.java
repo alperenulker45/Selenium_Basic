@@ -52,8 +52,13 @@ public class Sample3Task {
 //         check that it is True that value of second button is
 //         "this is Also a Button" if you ignore Caps Locks
 //         fail with custom error message:
-        assertTrue(driver.findElement(By.name("randomButton2")).getAttribute("value").equalsIgnoreCase("this is Also a Button"));
-        fail("fail with custom message");
+        try {
+        assertTrue(driver.findElement(By.name("randomButton2")).getAttribute("value")
+                .equalsIgnoreCase("this is Also a Button"));}
+        catch (AssertionError e) {
+            System.out.println("fail with custom message");
+            e.printStackTrace();
+        }
 
     }
 
