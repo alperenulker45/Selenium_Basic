@@ -7,11 +7,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
@@ -52,7 +55,7 @@ public class Sample7Task {
             for (WebElement e : checkBoxList) {
                 assertFalse(e.isSelected());
             }
-        }catch (AssertionError e) {
+        } catch (AssertionError e) {
             System.out.println("Checkbox should not be selected");
             e.printStackTrace();
         }
@@ -91,7 +94,7 @@ public class Sample7Task {
             for (WebElement e : radioBtns) {
                 assertFalse(e.isSelected());
             }
-        }catch (AssertionError e) {
+        } catch (AssertionError e) {
             System.out.println("Radio button should not be selected");
             e.printStackTrace();
         }
@@ -157,6 +160,7 @@ public class Sample7Task {
         WebElement dateWidget = driver.findElement(By.id("ui-datepicker-div"));
 //    go back 10 month in calendar on page
         for (int i = 0; i < 171; i++) {
+            Thread.sleep(15);
             dateWidget.findElement(By.className("ui-datepicker-prev")).click();
         }
 
@@ -170,12 +174,10 @@ public class Sample7Task {
 
         try {
             assertEquals(expectedTxt, displayedTxt.getText());
-        }catch (AssertionError e) {
+        } catch (AssertionError e) {
             System.out.println("Result should be : \"You entered date: 07/04/2007\"");
             e.printStackTrace();
         }
-
-
     }
 
     @Test
@@ -190,5 +192,40 @@ public class Sample7Task {
         Thread.sleep(2000);
 
         assertEquals("05/02/1959", dateBox.getAttribute("value"));
+    }
+
+    @Test
+    public void CalendarTestBonusDifferentWay() throws InterruptedException {
+        WebElement dateBox = driver.findElement(By.id("vfb-8"));
+        dateBox.click();
+
+        WebElement dateWidget = driver.findElement(By.id("ui-datepicker-div"));
+        WebElement year;
+        WebElement month;
+
+        boolean is2007July;
+        while (is2007July=true) {
+            year = driver.findElement(By.cssSelector(".ui-datepicker-year"));
+            month = driver.findElement(By.cssSelector(".ui-datepicker-month"));
+            if (year.getText().equals(String.valueOf(2007)) && month.getText().equals("July")) {
+                break;
+            }
+            else dateWidget.findElement(By.className("ui-datepicker-prev")).click();
+        }
+
+        dateWidget.findElement(By.xpath("//a[text()='4']")).click();
+        driver.findElement(By.id("result_button_date")).click(); //click on result button
+        Thread.sleep(1000);
+
+        WebElement displayedTxt = driver.findElement(By.id("result_date"));
+
+        String expectedTxt = "You entered date: 07/04/2007";
+
+        try {
+            assertEquals(expectedTxt, displayedTxt.getText());
+        } catch (AssertionError e) {
+            System.out.println("Result should be : \"You entered date: 07/04/2007\"");
+            e.printStackTrace();
+        }
     }
 }
