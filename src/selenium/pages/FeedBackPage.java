@@ -144,7 +144,10 @@ public class FeedBackPage extends GenericSamplePage {
     }
 
     public void checkFormAfterNoBtn() {
-        System.out.println("nameInput.getText() = " + nameInput.getText());
+
+        assertEquals("Alperen Ulker", nameInput.getAttribute("value"));
+        assertEquals("32", ageInput.getAttribute("value"));
+        assertEquals("Everything is fine", commentArea.getAttribute("value"));
     }
 
     public WebElement getNameInput() {
